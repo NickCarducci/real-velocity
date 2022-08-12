@@ -10,7 +10,7 @@ class SaltBank extends React.Component {
     //const {} = this.state;
     //console.log(this.state.username);
     //const space = " ";
-    const setting = (n, more) => {
+    /*const setting = (n, more) => {
       return {
         style: {
           color: this.state["hoverin" + n] ? "rgb(50,70,90)" : "black",
@@ -33,7 +33,7 @@ class SaltBank extends React.Component {
         onMouseEnter: () => this.setState({ ["hoverin" + n]: true }),
         onMouseLeave: () => this.setState({ ["hoverin" + n]: false })
       };
-    };
+    };*/
     return (
       <div
         style={{
