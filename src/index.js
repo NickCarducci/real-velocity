@@ -6,7 +6,6 @@ import { UAParser } from "ua-parser-js";
 import App from "./App";
 //import Bear from "../functions/bear/[[path]].js";
 
-var check = null;
 class PathRouter extends React.Component {
   constructor(props) {
     super(props);
