@@ -37,6 +37,7 @@ class SaltBank extends React.Component {
     return (
       <div
         style={{
+          transition: ".3s ease-in",
           display: "flex",
           flexDirection: "column",
           justifyContent: this.props.onscroll ? "start" : "space-around",
@@ -53,7 +54,9 @@ class SaltBank extends React.Component {
             top: "0px"
           }}
         >
-          Recessions are when wages are paid
+          Renegotiated premium vs whole price control
+          <br />
+          Recessions are when wages are paid{/*} (-phillips & )*/}
           <h2>
             <a href="https://marx.quora.com/What-were-Karl-Marxs-writings-1">
               What were Karl Marx's writings
