@@ -48,13 +48,22 @@ class SaltBank extends React.Component {
           alignItems: "center"
         }}
       >
-        <div style={{ alignSelf: "start", left: "0px" }}>/moneyquantity</div>
+        <div
+          style={{
+            position: "fixed",
+            //alignSelf: "start",
+            top: "3px",
+            left: "5px"
+          }}
+        >
+          /moneyquantity
+        </div>
         <div
           style={{
             color: "black",
             backgroundColor: "rgb(200, 230, 240)",
             position: "relative",
-            top: "0px"
+            marginTop: "20px"
           }}
         >
           <br />
