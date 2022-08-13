@@ -10,7 +10,7 @@ class SaltBank extends React.Component {
     //const {} = this.state;
     //console.log(this.state.username);
     //const space = " ";
-    const setting = (n, more) => {
+    /*const setting = (n, more) => {
       return {
         style: {
           color: this.state["hoverin" + n] ? "rgb(50,70,90)" : "black",
@@ -33,21 +33,27 @@ class SaltBank extends React.Component {
         onMouseEnter: () => this.setState({ ["hoverin" + n]: true }),
         onMouseLeave: () => this.setState({ ["hoverin" + n]: false })
       };
-    };
+    };*/
     return (
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          justifyContent: "space-around",
+          justifyContent: this.props.onscroll ? "start" : "space-around",
           height: "calc(100vh - 20px)",
           fontFamily: "sans-serif",
           textAlign: "center",
-          alignItems: "center",
-          backgroundColor: "rgb(200, 230, 240)"
+          alignItems: "center"
         }}
       >
-        <div>
+        <div
+          style={{
+            backgroundColor: "rgb(200, 230, 240)",
+            position: "relative",
+            top: "0px"
+          }}
+        >
+          Recessions are when wages are paid
           <h2>
             <a href="https://marx.quora.com/What-were-Karl-Marxs-writings-1">
               What were Karl Marx's writings
@@ -108,4 +114,3 @@ class SaltBank extends React.Component {
 }
 
 export default SaltBank;
-
