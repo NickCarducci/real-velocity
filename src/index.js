@@ -29,7 +29,6 @@ class PathRouter extends React.Component {
       () => {
         this.resize();
         window.addEventListener("resize", this.resize);
-        //window.addEventListener("scroll", this.scroll);
         this.checkInstall(true);
         window.FontAwesomeConfig = { autoReplaceSvg: "nest" };
         window.addEventListener("scroll", this.scroll);
@@ -37,7 +36,7 @@ class PathRouter extends React.Component {
     );
   };
   componentWillUnmount = () => {
-    clearInterval(check);
+    clearTimeout(this.timey);
     window.removeEventListener("resize", this.resize);
     window.removeEventListener("scroll", this.scroll);
     window.removeEventListener("beforeinstallprompt", this.beforeinstallprompt);
@@ -63,12 +62,7 @@ class PathRouter extends React.Component {
         width:
           window.innerHeight - window.document.body.offsetHeight < 0
             ? w - 16
-            : w,
-        onscroll:
-          //window.scrollY < 2 ||
-          window.document.body.scrollHeight -
-            window.document.body.clientHeight >
-          50
+            : w
       },
       () => {
         clearTimeout(this.timey);
