@@ -32,33 +32,59 @@ class PathRouter extends React.Component {
         //window.addEventListener("scroll", this.scroll);
         this.checkInstall(true);
         window.FontAwesomeConfig = { autoReplaceSvg: "nest" };
+        window.addEventListener("scroll", this.scroll);
       }
     );
   };
   componentWillUnmount = () => {
     clearInterval(check);
     window.removeEventListener("resize", this.resize);
-    //window.removeEventListener("scroll", this.scroll);
+    window.removeEventListener("scroll", this.scroll);
     window.removeEventListener("beforeinstallprompt", this.beforeinstallprompt);
     window.removeEventListener("appinstalled", this.afterinstallation);
     this.matchMedia &&
       this.matchMedia.removeEventListener("change", this.installChange);
   };
   resize = () =>
-    this.setState({
-      width: this.state.ios ? window.screen.availWidth : window.innerWidth,
-      availableHeight: this.state.ios
-        ? window.screen.availHeight - 20
-        : window.innerHeight - 30
-    });
+    this.setState(
+      {
+        width: this.state.ios ? window.screen.availWidth : window.innerWidth,
+        availableHeight: this.state.ios
+          ? window.screen.availHeight - 20
+          : window.innerHeight - 30
+      },
+      () => this.scroll()
+    );
 
-  /*scroll = () => {
+  scroll = () => {
     const w = !this.matchMedia ? window.screen.availWidth : window.innerWidth;
-    this.setState({
-      width:
-        window.innerHeight - window.document.body.offsetHeight < 0 ? w - 16 : w
-    });
-  };*/
+    this.setState(
+      {
+        width:
+          window.innerHeight - window.document.body.offsetHeight < 0
+            ? w - 16
+            : w,
+        onscroll:
+          //window.scrollY < 2 ||
+          window.document.body.scrollHeight -
+            window.document.body.clientHeight >
+          50
+      },
+      () => {
+        clearTimeout(this.timey);
+        this.timey = setTimeout(
+          () =>
+            this.setState({
+              onscroll:
+                window.document.body.scrollHeight -
+                  window.document.body.clientHeight >
+                50
+            }),
+          200
+        );
+      }
+    );
+  };
   // Initialize deferredPrompt for use later to show browser install prompt.
   beforeinstallprompt = (e) => {
     // Prevent the mini-infobar from appearing on mobile
@@ -180,6 +206,7 @@ class PathRouter extends React.Component {
                           }
                         }}
                         //functions={{ bear: this.bf.current.onclick }}
+                        onscroll={this.state.onscroll}
                       />
                     )}
                   />
