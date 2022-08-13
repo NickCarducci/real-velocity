@@ -37,6 +37,7 @@ class SaltBank extends React.Component {
     return (
       <div
         style={{
+          color: "grey",
           transition: ".3s ease-in",
           display: "flex",
           flexDirection: "column",
@@ -47,13 +48,16 @@ class SaltBank extends React.Component {
           alignItems: "center"
         }}
       >
+        <div style={{ alignSelf: "start", left: "0px" }}>/moneyquantity</div>
         <div
           style={{
+            color: "black",
             backgroundColor: "rgb(200, 230, 240)",
             position: "relative",
             top: "0px"
           }}
         >
+          <br />
           Renegotiated premium vs whole price control
           <br />
           Recessions are when wages are paid{/*} (-phillips & )*/}
