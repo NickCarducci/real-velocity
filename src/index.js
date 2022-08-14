@@ -1,135 +1,230 @@
 import React from "react";
+import ReactDOM from "react-dom";
+import { Route, BrowserRouter, Switch } from "react-router-dom";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { UAParser } from "ua-parser-js";
+import App from "./App";
+//import Bear from "../functions/bear/[[path]].js";
 
-class SaltBank extends React.Component {
+class PathRouter extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
-  }
-
-  render() {
-    //const {} = this.state;
-    //console.log(this.state.username);
-    //const space = " ";
-    /*const setting = (n, more) => {
-      return {
-        style: {
-          color: this.state["hoverin" + n] ? "rgb(50,70,90)" : "black",
-          cursor: "pointer",
-          ...more
-        },
-        onMouseEnter: () => this.setState({ ["hoverin" + n]: true }),
-        onMouseLeave: () => this.setState({ ["hoverin" + n]: false })
-      };
+    var parser = new UAParser();
+    const name = parser.getBrowser().name;
+    console.log(name);
+    this.state = {
+      browser: name
     };
-    const setting2 = (n, more) => {
-      return {
-        style: {
-          color: this.state["hoverin" + n]
-            ? "rgb(80,100,120)"
-            : "rgb(50,70,90)",
-          cursor: "pointer",
-          ...more
-        },
-        onMouseEnter: () => this.setState({ ["hoverin" + n]: true }),
-        onMouseLeave: () => this.setState({ ["hoverin" + n]: false })
+    //this.bf = React.createRef();
+    this.matchMedia = null;
+    this.deferredPrompt = null;
+  }
+  componentDidMount = () => {
+    this.setState(
+      {
+        ios: this.state.browser.includes("Safari"),
+        iosNoPhoto: this.state.browser.includes("Safari")
+      },
+      () => {
+        this.resize();
+        window.addEventListener("resize", this.resize);
+        this.checkInstall(true);
+        window.FontAwesomeConfig = { autoReplaceSvg: "nest" };
+        window.addEventListener("scroll", this.scroll);
+      }
+    );
+  };
+  componentWillUnmount = () => {
+    clearTimeout(this.timey);
+    window.removeEventListener("resize", this.resize);
+    window.removeEventListener("scroll", this.scroll);
+    window.removeEventListener("beforeinstallprompt", this.beforeinstallprompt);
+    window.removeEventListener("appinstalled", this.afterinstallation);
+    this.matchMedia &&
+      this.matchMedia.removeEventListener("change", this.installChange);
+  };
+  resize = () =>
+    this.setState(
+      {
+        width: this.state.ios ? window.screen.availWidth : window.innerWidth,
+        availableHeight: this.state.ios
+          ? window.screen.availHeight - 20
+          : window.innerHeight - 30
+      },
+      () => this.scroll()
+    );
+
+  scroll = () => {
+    const w = !this.matchMedia ? window.screen.availWidth : window.innerWidth;
+    this.setState(
+      {
+        width:
+          window.innerHeight - window.document.body.offsetHeight < 0
+            ? w - 16
+            : w
+      },
+      () => {
+        clearTimeout(this.timey);
+        this.timey = setTimeout(
+          () =>
+            this.setState({
+              onscroll:
+                window.document.body.scrollHeight -
+                  window.document.body.clientHeight >
+                50
+            }),
+          200
+        );
+      }
+    );
+  };
+  // Initialize deferredPrompt for use later to show browser install prompt.
+  beforeinstallprompt = (e) => {
+    // Prevent the mini-infobar from appearing on mobile
+    e.preventDefault();
+    this.setState({ showPWAprompt: true }, () => (this.deferredPrompt = e));
+    // Optionally, send analytics event that PWA install promo was shown.
+    console.log(`'beforeinstallprompt' event was fired.`);
+  };
+  afterinstallation = () => {
+    this.setState({ showPWAprompt: false }, () => (this.deferredPrompt = null));
+    console.log("PWA was installed");
+  };
+  installChange = (evt) => this.setState({ showPWAprompt: !evt.matches });
+
+  checkInstall = (addListers) => {
+    if (
+      navigator.standalone ||
+      window.matchMedia("(display-mode: standalone)").matches ||
+      document.referrer.startsWith("android-app://")
+    ) {
+      console.log("PWA");
+      window.alert(
+        `wow, thanks for adding us to your homescreen, please re-add ` +
+          `if any bugs pop up and email nick@thumbprint.us with any complaints! ` +
+          `STAGE: Work-In-Progress Beta (a.k.a. Alpha)`
+      );
+    } else {
+      const ios = () => {
+        return (
+          [
+            "iPad Simulator",
+            "iPhone Simulator",
+            "iPod Simulator",
+            "iPad",
+            "iPhone",
+            "iPod"
+          ].includes(navigator.platform) ||
+          // iPad on iOS 13 detection
+          (navigator.userAgent.includes("iOS") && "ontouchend" in document)
+        );
       };
-    };*/
+      //!/iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase())
+      if (ios()) {
+        if (addListers) {
+          this.matchMedia = window.matchMedia("(display-mode: standalone)");
+          this.matchMedia.addEventListener("change", this.installChange);
+
+          console.log("PWA query");
+          window.addEventListener(
+            "beforeinstallprompt",
+            this.beforeinstallprompt
+          );
+          window.addEventListener("appinstalled", this.afterinstallation);
+          this.resize();
+        }
+      } else
+        this.setState({ showPWAprompt: true }, () =>
+          console.log("PWA query on iOS")
+        );
+    }
+  };
+  render() {
+    const { availableHeight, showPWAprompt, width } = this.state;
     return (
-      <div
-        style={{
-          color: "grey",
-          transition: ".3s ease-in",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: this.props.onscroll ? "start" : "space-around",
-          height: "calc(100vh - 20px)",
-          fontFamily: "sans-serif",
-          textAlign: "center",
-          alignItems: "center"
+      <Route //BrowserRouter
+        render={({ location, history }) => {
+          if (location.pathname !== this.state.pathname) {
+            clearTimeout(this.pauseRender);
+            this.pauseRender = setTimeout(() => {
+              this.setState({ pathname: location.pathname, history }, () => {
+                if (location.state && location.state.statePathname) {
+                  this.setState({
+                    statePathname: location.state.statePathname
+                  });
+                }
+              });
+            }, 200);
+          }
+          return (
+            <TransitionGroup
+              key="1"
+              style={{
+                width: "100%",
+                transition: ".3s ease-in",
+                minHeight: availableHeight ? availableHeight : "100%"
+              }}
+            >
+              <CSSTransition key="11" timeout={300} classNames={"fade"}>
+                <Switch key={location.key} location={location}>
+                  <Route
+                    render={(props) => (
+                      <App
+                        unmountFirebase={this.state.unmountFirebase}
+                        showPWAprompt={showPWAprompt}
+                        apple={!this.matchMedia}
+                        appHeight={availableHeight}
+                        width={width}
+                        history={history}
+                        pathname={location.pathname}
+                        statePathname={this.state.statePathname}
+                        location={location}
+                        closeWebAppPrompt={() =>
+                          this.setState({ showPWAprompt: false })
+                        }
+                        addToHomescreen={async () => {
+                          this.setState({ showPWAprompt: false });
+                          if (!this.deferredPrompt) {
+                            window.alert(
+                              "for iOS, you must use their browser option, 'add to homescreen' " +
+                                "instead of providing web-developers beforeinstallprompt appinstalled"
+                            );
+                          } else {
+                            this.deferredPrompt.prompt();
+                            const { outcome } = await this.deferredPrompt
+                              .userChoice;
+                            console.log(outcome);
+                            // the prompt can't be used again so, throw it away
+                            this.deferredPrompt = null;
+                          }
+                        }}
+                        //functions={{ bear: this.bf.current.onclick }}
+                        onscroll={this.state.onscroll}
+                      />
+                    )}
+                  />
+                </Switch>
+              </CSSTransition>
+            </TransitionGroup>
+          );
         }}
-      >
-        <div
-          style={{
-            position: "fixed",
-            //alignSelf: "start",
-            top: "3px",
-            left: "5px"
-          }}
-        >
-          /
-          <a style={{ color: "rgb(120,150,200)" }} href="https://saltbank.org">
-            moneyquantity
-          </a>
-        </div>
-        <div
-          style={{
-            color: "black",
-            backgroundColor: "rgb(200, 230, 240)",
-            position: "relative",
-            marginTop: "20px"
-          }}
-        >
-          <br />
-          Renegotiated premium vs whole price control
-          <br />
-          Recessions are when wages are paid{/*} (-phillips & )*/}
-          <h2>
-            <a href="https://marx.quora.com/What-were-Karl-Marxs-writings-1">
-              What were Karl Marx's writings
-            </a>
-            ?
-          </h2>
-          <h2>
-            <a href="https://www.quora.com/unanswered/Is-capital-not-debenture-trust-as-Karl-Marx-discerns">
-              Is capital not debenture trust as Karl Marx discerns
-            </a>
-            ?
-          </h2>
-          <h2>
-            <a href="https://www.quora.com/unanswered/Is-real-velocity-not-an-NBER-recession-with-hours-worked-notwithstanding">
-              Is real velocity not an NBER recession with hours worked
-              notwithstanding
-            </a>
-            ?
-          </h2>
-          <h2>
-            <a href="https://www.quora.com/If-money-velocity-equals-price-and-quantity-how-are-bonds-money-or-otherwise-not-totally-inflationary">
-              If money velocity equals price and quantity, how are bonds money
-              or otherwise not totally inflationary
-            </a>
-            ?
-          </h2>
-          <h2>
-            <a href="https://www.quora.com/Was-the-Holodomor-Great-Leap-Forward-and-Covid-expected-by-population-growth-a-lifetime-ago/answer/Nick-Carducci">
-              Was the Holodomor, Great Leap Forward and Covid expected by
-              population growth a lifetime ago
-            </a>
-            ?
-          </h2>
-          <h2>
-            <a href="https://www.quora.com/unanswered/Is-rare-disease-and-luxury-reason-for-government-subsidy-investor-fixed-sunk-costs-notwithstanding">
-              Is rare disease and luxury reason for government subsidy, investor
-              fixed sunk costs notwithstanding
-            </a>
-            ?
-          </h2>
-          <h2>
-            <a href="https://www.quora.com/unanswered/Is-overtime-implied-change-order-not-the-very-definition-of-fraud">
-              Is overtime-implied change order not the very definition of fraud
-            </a>
-            ?
-          </h2>
-          <h2>
-            <a href="https://www.quora.com/unanswered/Does-inflation-not-happen-when-bonds-are-bought-by-private-investors">
-              Does inflation not happen when bonds are bought by private
-              investors
-            </a>
-            ?
-          </h2>
-        </div>
-      </div>
+      ></Route>
     );
   }
 }
 
-export default SaltBank;
+const rootElement = document.getElementById("root");
+ReactDOM.render(
+  <BrowserRouter>
+    <PathRouter />
+  </BrowserRouter>,
+  rootElement
+);
+
+/*const vE = document.getElementById("root");
+ReactDOM[vE && vE.innerHTML !== "" ? "hydrate" : "render"](
+  <PathRouter />,
+  vE,
+  () => console.log("virtualElem loaded alright")
+);
+*/
