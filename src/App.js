@@ -56,7 +56,10 @@ class SaltBank extends React.Component {
             left: "5px"
           }}
         >
-          /moneyquantity
+          /
+          <a style={{ color: "rgb(120,150,200)" }} href="https://saltbank.org">
+            moneyquantity
+          </a>
         </div>
         <div
           style={{
