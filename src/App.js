@@ -63,6 +63,7 @@ class SaltBank extends React.Component {
         </div>
         <div
           style={{
+            textAlign: "right",
             position: "fixed",
             //alignSelf: "start",
             top: "3px",
@@ -72,6 +73,14 @@ class SaltBank extends React.Component {
           <a style={{ color: "rgb(120,150,200)" }} href="https://thetax.party">
             crowdfundingfortaxes.quora.com
             {/**"imitation socialists, raise expectations without behavior, more [less trust withou]t" edwina currie */}
+          </a>
+          <br />
+          <a
+            style={{ color: "rgb(120,150,200)" }}
+            href="https://www.quora.com/unanswered/Why-is-debt-to-GDP-relevant-if-the-velocity-of-checking-is-1-11-of-M2"
+          >
+            Why is debt to GDP relevant if the velocity of checking is 1/11 of
+            M2?
           </a>
         </div>
         <div
