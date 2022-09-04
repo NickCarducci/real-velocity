@@ -57,8 +57,8 @@ class SaltBank extends React.Component {
           }}
         >
           <a style={{ color: "rgb(120,150,200)" }} href="https://commie.dev">
-            efficiency per hour for profit should be in use value versus
-            exchange
+            efficiency per hour for profit should be inndividual use value
+            versus exchange
           </a>
         </div>
         <div
