@@ -52,6 +52,32 @@ class SaltBank extends React.Component {
           style={{
             position: "fixed",
             //alignSelf: "start",
+            bottom: "3px",
+            left: "5px"
+          }}
+        >
+          <a style={{ color: "rgb(120,150,200)" }} href="https://commie.dev">
+            efficiency per hour for profit should be in use value versus
+            exchange
+          </a>
+        </div>
+        <div
+          style={{
+            position: "fixed",
+            //alignSelf: "start",
+            top: "3px",
+            right: "5px"
+          }}
+        >
+          <a style={{ color: "rgb(120,150,200)" }} href="https://thetax.party">
+            crowdfundingfortaxes.quora.com
+            {/**"imitation socialists, raise expectations without behavior, more [less trust withou]t" edwina currie */}
+          </a>
+        </div>
+        <div
+          style={{
+            position: "fixed",
+            //alignSelf: "start",
             top: "3px",
             left: "5px"
           }}
@@ -60,6 +86,7 @@ class SaltBank extends React.Component {
           <a style={{ color: "rgb(120,150,200)" }} href="https://saltbank.org">
             moneyquantity
           </a>
+          {/**velocity money without inflation shut uo tiik uf you wanna ay me @nickcarducci */}
         </div>
         <div
           style={{
