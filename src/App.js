@@ -95,8 +95,9 @@ class SaltBank extends React.Component {
           <a style={{ color: "rgb(120,150,200)" }} href="https://saltbank.org">
             moneyquantity
           </a>
-          {/**velocity money without inflation shut uo tiik uf you wanna ay me @nickcarducci */}
+          {/**velocity money without inflation shut uo tiik uf you wanna ay me @ nickcarducci */}
         </div>
+        Inflation, material benefit shrinkflation, or final goods.
         <div
           style={{
             color: "black",
@@ -109,59 +110,59 @@ class SaltBank extends React.Component {
           Renegotiated premium vs whole price control
           <br />
           Recessions are when wages are paid{/*} (-phillips & )*/}
-          <h2>
+          <h5>
             <a href="https://marx.quora.com/What-were-Karl-Marxs-writings-1">
               What were Karl Marx's writings
             </a>
             ?
-          </h2>
-          <h2>
+          </h5>
+          <h5>
             <a href="https://www.quora.com/unanswered/Is-capital-not-debenture-trust-as-Karl-Marx-discerns">
               Is capital not debenture trust as Karl Marx discerns
             </a>
             ?
-          </h2>
-          <h2>
+          </h5>
+          <h5>
             <a href="https://www.quora.com/unanswered/Is-real-velocity-not-an-NBER-recession-with-hours-worked-notwithstanding">
               Is real velocity not an NBER recession with hours worked
               notwithstanding
             </a>
             ?
-          </h2>
-          <h2>
+          </h5>
+          <h5>
             <a href="https://www.quora.com/If-money-velocity-equals-price-and-quantity-how-are-bonds-money-or-otherwise-not-totally-inflationary">
               If money velocity equals price and quantity, how are bonds money
               or otherwise not totally inflationary
             </a>
             ?
-          </h2>
-          <h2>
+          </h5>
+          <h5>
             <a href="https://www.quora.com/Was-the-Holodomor-Great-Leap-Forward-and-Covid-expected-by-population-growth-a-lifetime-ago/answer/Nick-Carducci">
               Was the Holodomor, Great Leap Forward and Covid expected by
               population growth a lifetime ago
             </a>
             ?
-          </h2>
-          <h2>
+          </h5>
+          <h5>
             <a href="https://www.quora.com/unanswered/Is-rare-disease-and-luxury-reason-for-government-subsidy-investor-fixed-sunk-costs-notwithstanding">
               Is rare disease and luxury reason for government subsidy, investor
               fixed sunk costs notwithstanding
             </a>
             ?
-          </h2>
-          <h2>
+          </h5>
+          <h5>
             <a href="https://www.quora.com/unanswered/Is-overtime-implied-change-order-not-the-very-definition-of-fraud">
               Is overtime-implied change order not the very definition of fraud
             </a>
             ?
-          </h2>
-          <h2>
+          </h5>
+          <h5>
             <a href="https://www.quora.com/unanswered/Does-inflation-not-happen-when-bonds-are-bought-by-private-investors">
               Does inflation not happen when bonds are bought by private
               investors
             </a>
             ?
-          </h2>
+          </h5>
         </div>
       </div>
     );
